@@ -15,11 +15,11 @@
     <p id="accelAlpha"></p>
     <p id="accelBeta"></p>
     <p id="accelGamma"></p>
+    <p id="posX"></p>
+    <p id="posY"></p>
 </head>
 <body>
 
-  
-    
 </body>
 </html>
 
@@ -50,6 +50,7 @@ function error(err) {
 
 navigator.geolocation.getCurrentPosition(success, error, options);
 
+//Ces lignes marchent uniquement sur un appareil pouvant calculer ces valeurs car Null ne peux pas etre arondis
 window.addEventListener('devicemotion', function(event) {
   document.getElementById('accelX').innerHTML = "Acceleration X: " + event.acceleration.x.toFixed(2) + " m/s2";
   document.getElementById('accelY').innerHTML = "Acceleration Y: " + event.acceleration.y.toFixed(2) + " m/s2";
@@ -60,6 +61,17 @@ window.addEventListener('deviceorientation', function(event) {
 document.getElementById('accelAlpha').innerHTML = "Rotation Alpha: " + event.alpha.toFixed(2)+"°";
   document.getElementById('accelBeta').innerHTML = "Rotation Beta: " + event.beta.toFixed(2)+"°";
   document.getElementById('accelGamma').innerHTML = "Rotation Gamma: " + event.gamma.toFixed(2)+"°";
+});
+
+window.addEventListener("touchstart", function(e){
+if(e.type == 'touchstart'){
+    var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
+    var touch = evt.touches[0] || evt.changedTouches[0];
+    x = touch.pageX;
+    y = touch.pageY;
+    document.getElementById('posX').innerHTML = "TouchPos X: "+ x;
+    document.getElementById('posY').innerHTML = "TouchPos Y: "+y;
+}
 });
 
 
