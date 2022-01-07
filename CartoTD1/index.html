@@ -9,6 +9,12 @@
     <p id="speed"></p>
     <p id="timestamp"></p>
     <p id="timestampconvert"></p>
+    <p id="accelX"></p>
+    <p id="accelY"></p>
+    <p id="accelZ"></p>
+    <p id="accelAlpha"></p>
+    <p id="accelBeta"></p>
+    <p id="accelGamma"></p>
 </head>
 <body>
 
@@ -44,6 +50,15 @@ function error(err) {
 
 navigator.geolocation.getCurrentPosition(success, error, options);
 
+window.addEventListener('devicemotion', function(event) {
+  document.getElementById('accelX').innerHTML = "Acceleration X: " + event.acceleration.x + " m/s2";
+  document.getElementById('accelY').innerHTML = "Acceleration Y: " + event.acceleration.y + " m/s2";
+  document.getElementById('accelZ').innerHTML = "Acceleration Z: " + event.acceleration.z + " m/s2";
+  document.getElementById('accelAlpha').innerHTML = "Acceleration Alpha: " + event.rotationRate.alpha;
+  document.getElementById('accelBeta').innerHTML = "Acceleration Beta: " + event.rotationRate.beta;
+  document.getElementById('accelGamma').innerHTML = "Acceleration Gamma: " + event.rotationRate.gamma;
+
+});
 
 
 
