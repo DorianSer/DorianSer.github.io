@@ -8,6 +8,7 @@
     <p id="accuracy"></p>
     <p id="speed"></p>
     <p id="timestamp"></p>
+    <p id="timestampconvert"></p>
 </head>
 <body>
 
@@ -27,16 +28,18 @@ function success(pos) {
   var crd = pos.coords;
   var speed = pos.speed
   var timestamp = pos.timestamp
+  var timestampconvert = new Date(timestamp);
 
   document.getElementById('latitude').innerHTML = "Latitude: "+crd.latitude;
   document.getElementById('longitude').innerHTML = "Longitude: "+crd.longitude;
   document.getElementById('accuracy').innerHTML = "Accuracy: "+crd.accuracy;
   document.getElementById('speed').innerHTML = "Speed: "+speed;
-  document.getElementById('timestamp').innerHTML = "TimeStamp: "+timestamp;
+  document.getElementById('timestamp').innerHTML = "UNIX TimeStamp: "+timestamp;
+  document.getElementById('timestampconvert').innerHTML = "Date: "+timestampconvert;
 }
 
 function error(err) {
-  console.warn(`ERREUR (${err.code}): ${err.message}`);
+    document.getElementById('latitude').innerHTML = "Une erreur est survenue ou vous avez refusé de partager vos données géographiques";
 }
 
 navigator.geolocation.getCurrentPosition(success, error, options);
