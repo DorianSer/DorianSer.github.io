@@ -66,18 +66,23 @@ document.getElementById('accelAlpha').innerHTML = "Rotation Alpha: " + event.alp
 
 window.addEventListener("touchstart", function(e){
 document.getElementById('typetouch').innerHTML = "Type touch: " + e.type;
-if(e.type == 'touchstart'){
     var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
     var touch = evt.touches[0] || evt.changedTouches[0];
     x = touch.pageX;
     y = touch.pageY;
     document.getElementById('posX').innerHTML = "TouchPos X: "+ x;
     document.getElementById('posY').innerHTML = "TouchPos Y: "+y;
-}
+
 });
 
 window.addEventListener("touchmove", function(e){
     document.getElementById('typetouch').innerHTML = "Type touch: " + e.type;
+    var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
+    var touch = evt.touches[0] || evt.changedTouches[0];
+    x = touch.pageX;
+    y = touch.pageY;
+    document.getElementById('posX').innerHTML = "TouchPos X: "+ x;
+    document.getElementById('posY').innerHTML = "TouchPos Y: "+y;
 });
 
 window.addEventListener("touchend", function(e){
