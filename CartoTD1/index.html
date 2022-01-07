@@ -51,15 +51,15 @@ function error(err) {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 window.addEventListener('devicemotion', function(event) {
-  document.getElementById('accelX').innerHTML = "Acceleration X: " + event.acceleration.x + " m/s2";
-  document.getElementById('accelY').innerHTML = "Acceleration Y: " + event.acceleration.y + " m/s2";
-  document.getElementById('accelZ').innerHTML = "Acceleration Z: " + event.acceleration.z + " m/s2";
+  document.getElementById('accelX').innerHTML = "Acceleration X: " + event.acceleration.x.toFixed(2) + " m/s2";
+  document.getElementById('accelY').innerHTML = "Acceleration Y: " + event.acceleration.y.toFixed(2) + " m/s2";
+  document.getElementById('accelZ').innerHTML = "Acceleration Z: " + event.acceleration.z.toFixed(2) + " m/s2";
 });
 
 window.addEventListener('deviceorientation', function(event) {
-document.getElementById('accelAlpha').innerHTML = "Rotation Alpha: " + event.alpha+"°";
-  document.getElementById('accelBeta').innerHTML = "Rotation Beta: " + event.beta+"°";
-  document.getElementById('accelGamma').innerHTML = "Rotation Gamma: " + event.gamma+"°";
+document.getElementById('accelAlpha').innerHTML = "Rotation Alpha: " + event.alpha.toFixed(2)+"°";
+  document.getElementById('accelBeta').innerHTML = "Rotation Beta: " + event.beta.toFixed(2)+"°";
+  document.getElementById('accelGamma').innerHTML = "Rotation Gamma: " + event.gamma.toFixed(2)+"°";
 });
 
 
