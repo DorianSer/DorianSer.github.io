@@ -17,6 +17,7 @@
     <p id="accelGamma"></p>
     <p id="posX"></p>
     <p id="posY"></p>
+    <p id="typetouch"></p>
 </head>
 <body>
 
@@ -64,6 +65,7 @@ document.getElementById('accelAlpha').innerHTML = "Rotation Alpha: " + event.alp
 });
 
 window.addEventListener("touchstart", function(e){
+document.getElementById('typetouch').innerHTML = "Type touch: " + e.type;
 if(e.type == 'touchstart'){
     var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
     var touch = evt.touches[0] || evt.changedTouches[0];
@@ -74,6 +76,11 @@ if(e.type == 'touchstart'){
 }
 });
 
+window.addEventListener("touchmove", function(e){
+    document.getElementById('typetouch').innerHTML = "Type touch: " + e.type;
+});
 
-
+window.addEventListener("touchend", function(e){
+    document.getElementById('typetouch').innerHTML = "Type touch: " + e.type;
+});
 </script>
