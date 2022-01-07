@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GeoCartoTD1</title>
+	<meta charset="utf-8"/>
+    <p id="latitude"></p>
+    <p id="longitude"></p>
+    <p id="accuracy"></p>
+    <p id="speed"></p>
+    <p id="timestamp"></p>
+</head>
+<body>
+
+  
+    
+</body>
+</html>
+
+<script>
+    var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+  var speed = pos.speed
+  var timestamp = pos.timestamp
+
+  document.getElementById('latitude').innerHTML = "Latitude: "+crd.latitude;
+  document.getElementById('longitude').innerHTML = "Longitude: "+crd.longitude;
+  document.getElementById('accuracy').innerHTML = "Accuracy: "+crd.accuracy;
+  document.getElementById('speed').innerHTML = "Speed: "+speed;
+  document.getElementById('timestamp').innerHTML = "TimeStamp: "+timestamp;
+}
+
+function error(err) {
+  console.warn(`ERREUR (${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+
+
+
+
+</script>
