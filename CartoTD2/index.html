@@ -11,11 +11,15 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
+    <script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js?v1.3.0"></script>
     <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="map"></div>
+    <div id="map2"></div>
+    <div id="distance" style="background-color:yellow"></div>
+    <div id="map3"></div>
 </body>
 
 </html>
@@ -41,5 +45,74 @@ map.locate({setView: true, watch: true})
 
 var markerNice = L.marker([43.71952793124438,7.2833023071289205]).bindPopup('Le centre ville de Nice')
 map.addLayer(markerNice)
+
+//Carte2
+var map2 = L.map('map2').setView([25, -71], 13);
+
+//Stamen Terrain Background, besoin de dézoomer pour l'exercice !
+L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.{ext}', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+}).addTo(map2);
+
+var polygon = L.polygon([
+    [18.216919, -66.580912],
+    [27.75677, -81.46398],
+    [32.30182, -64.76036]
+]).bindPopup('Triangle des Bermude triangulé')
+map2.addLayer(polygon);
+
+var circle = L.circle([43.5411, 6.4648], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+}).addTo(map2);
+
+function createMarker()
+{
+     var markerFrom = L.marker([43.7009358,7.2683912]);
+     var markerTo =  L.marker([43.3,5.4]);
+     var from = markerFrom.getLatLng();
+     var to = markerTo.getLatLng();
+     markerFrom.bindPopup('Nice' + (from).toString());
+     markerTo.bindPopup('Marseille ' + (to).toString());
+     map2.addLayer(markerTo);
+     map2.addLayer(markerFrom);
+     getDistance(from, to);
+}
+
+function getDistance(from, to)
+{
+    var container = document.getElementById('distance');
+    container.innerHTML = ("Nice to Marseille - " + (from.distanceTo(to)).toFixed(0)/1000) + ' km';
+}
+
+var polyline = L.polyline([
+    [43.7009358,7.2683912],
+    [43.3,5.4]
+]).bindPopup('Distance entre Marseille et Nice')
+map2.addLayer(polyline);
+
+createMarker();
+
+//ex 3
+//Crée la map sur la position de l'utilisateur
+    var map3 = L.map('map3').locate({setView: true, watch: true});
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map3);
+
+function reqListener () {
+  L.geoJson(JSON.parse(this.response)).addTo(map3);
+}
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener);
+oReq.open("GET", "https://geo.api.gouv.fr/departements/06/communes?fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=geojson&geometry=centre");
+oReq.send();
 
 </script>
