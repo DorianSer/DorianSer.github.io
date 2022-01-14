@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>GeoCartoTD2</title>
+	<meta charset="utf-8"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="map"></div>
+</body>
+
+</html>
+
+<script>
+    //Crée la map sur la position de l'utilisateur
+    var map = L.map('map').locate({setView: true, watch: true});
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+//Fonction qui permet d'afficher un point sur ma position avec .locate
+map.locate({setView: true, watch: true})
+        .on('locationfound', function(e){
+            var marker = L.marker([e.latitude, e.longitude]).bindPopup('Tu est ici :)');
+            map.addLayer(marker);
+        })
+       .on('locationerror', function(e){
+            console.log(e);
+            alert("Location access denied.");
+        });
+
+var markerNice = L.marker([43.71952793124438,7.2833023071289205]).bindPopup('Le centre ville de Nice')
+map.addLayer(markerNice)
+
+</script>
