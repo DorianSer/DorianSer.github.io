@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+<head>
+<title>Our Funky HTML Page</title>
+<meta name="description" content="Our first page">
+<meta name="keywords" content="html tutorial template">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <svg
+  width="210mm"
+  height="297mm"
+  viewBox="0 0 210 297"
+  version="1.1"
+  id="svg5"
+  inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+  sodipodi:docname="dessin.svg"
+  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:svg="http://www.w3.org/2000/svg">
+ <sodipodi:namedview
+    id="namedview7"
+    pagecolor="#505050"
+    bordercolor="#eeeeee"
+    borderopacity="1"
+    inkscape:pageshadow="0"
+    inkscape:pageopacity="0"
+    inkscape:pagecheckerboard="0"
+    inkscape:document-units="mm"
+    showgrid="false"
+    inkscape:zoom="0.74118967"
+    inkscape:cx="397.33419"
+    inkscape:cy="561.93444"
+    inkscape:window-width="1920"
+    inkscape:window-height="1017"
+    inkscape:window-x="1912"
+    inkscape:window-y="-8"
+    inkscape:window-maximized="1"
+    inkscape:current-layer="layer1" />
+ <defs
+    id="defs2" />
+ <g
+    inkscape:label="Calque 1"
+    inkscape:groupmode="layer"
+    id="layer1">
+   <rect
+      style="fill:#000000;stroke-width:0.245861"
+      id="rect143"
+      width="209.2943"
+      height="130.65144"
+      x="0.96169603"
+      y="51.760815" />
+   <path
+      onclick="colorchange"
+      style="fill:#ffff00"
+      id="path379"
+      sodipodi:type="arc"
+      sodipodi:cx="140.28966"
+      sodipodi:cy="74.42849"
+      sodipodi:rx="18.205528"
+      sodipodi:ry="17.670071"
+      sodipodi:start="0.62159552"
+      sodipodi:end="0.52181679"
+      sodipodi:open="true"
+      sodipodi:arc-type="arc"
+      d="m 155.08985,84.718355 a 18.205528,17.670071 0 0 1 -25.02943,4.327207 18.205528,17.670071 0 0 1 -5.08123,-24.177776 18.205528,17.670071 0 0 1 24.77595,-5.533297 18.205528,17.670071 0 0 1 6.31716,23.901753" />
+   <rect
+      style="fill:#786721;stroke-width:0.264583"
+      id="rect469"
+      width="63.183891"
+      height="64.611778"
+      x="21.061296"
+      y="111.01803" />
+   <rect
+      style="fill:#d40000;stroke-width:0.264583"
+      id="rect647"
+      width="18.5625"
+      height="34.983173"
+      x="43.55048"
+      y="139.93269" />
+   <path
+      sodipodi:type="star"
+      style="fill:#800080"
+      id="path739"
+      inkscape:flatsided="false"
+      sodipodi:sides="3"
+      sodipodi:cx="-60.713203"
+      sodipodi:cy="245.55118"
+      sodipodi:r1="132.58418"
+      sodipodi:r2="66.292099"
+      sodipodi:arg1="0.54565505"
+      sodipodi:arg2="1.5928526"
+      inkscape:rounded="0"
+      inkscape:randomized="0"
+      d="m 52.618101,314.35947 -114.793343,-2.53232 -114.793338,-2.53233 59.58972,-98.14779 59.589733,-98.14779 55.2036204,100.68011 z"
+      transform="matrix(0.27520711,0,0,0.27140988,69.76431,27.072358)"
+      inkscape:transform-center-x="0.40236227"
+      inkscape:transform-center-y="-8.6503288" />
+ </g>
+</svg>
+
+</body>
+
+</html>
+
+<script>
+
+var plan = getElementById('rect143');
+var planinverse = false;
+
+function colorchange(){
+   planinverse = !planinverse;
+   if(planinverse){
+   plan.style.fill = "grey";
+   }
+   else {
+   plan.style.fill = "black";
+   }
+}
+</script>
