@@ -10,6 +10,7 @@
     <script src="three.js-master\build\three.min.js"></script>
     <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 		<script src="https://threejs.org//examples/js/loaders/GLTFLoader.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     
 <script>
 const scene = new THREE.Scene();
@@ -68,6 +69,21 @@ const scene = new THREE.Scene();
 
         return;
       }
+
+      $.ajax({
+        url:'https://restcountries.com/v3.1/all?fields=latlng,flags',
+        type:'GET',
+        dataType:'json',
+        error: function(){
+
+        },
+        success: function(data){
+          for(var i = 0; i < data.length; i++){
+            image = new THREE.TextureLoader().load( data[i].flags.svg);
+            coord(data[i].latlng[0],data[i].latlng[1],image)
+          }
+        },
+      });
 
 			const animate = function () {
 				requestAnimationFrame( animate );
