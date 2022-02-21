@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>GeoCartoTD2</title>
+	<meta charset="utf-8"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js?v1.3.0"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+		<script src="https://threejs.org//examples/js/loaders/GLTFLoader.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+
+
+<body>
+    <div id="map"></div>
+
+    <form>
+        <input type="button" value="ChangeValue" id="btn">
+        <input type="button" value="   " id="btnbleu" style="background-color: blue;">
+        <input type="button" value="   " id="btnrouge" style="background-color: red;">
+        <input type="button" value="   " id="btnvert" style="background-color: green;">
+        <input type="button" value="AddPoint" id="btn2">
+    </form>
+        
+<script>
+    //Crée la map sur la position de l'utilisateur
+    var map = L.map('map').locate({setView: true, watch: true});
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+//Fonction qui permet d'afficher un point sur ma position avec .locate
+map.locate({setView: true, watch: true})
+        .on('locationfound', function(e){
+            var marker = L.marker([e.latitude, e.longitude]).bindPopup('Tu est ici :)');
+            map.addLayer(marker);
+        })
+       .on('locationerror', function(e){
+            console.log(e);
+            alert("Location access denied.");
+        });
+
+var markerNice = L.marker([43.71952793124438,7.2833023071289205]).bindPopup('Le centre ville de Nice')
+map.addLayer(markerNice)
+
+var coord, lat, lon
+map.on('click', function(e){
+  coord = e.latlng;
+  lat = coord.lat;
+  lon = coord.lng;
+  console.log("You clicked the map at latitude: " + lat + " and longitude: " + lon);
+  });
+
+    
+  const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+                camera.position.set(2,0,5);
+    
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                const controls = new THREE.OrbitControls( camera, renderer.domElement );
+    
+                const geometryE = new THREE.SphereGeometry(3, 32, 32);
+          var material = new THREE.MeshPhongMaterial();
+          material.map    = THREE.ImageUtils.loadTexture('img/map1.jpg');
+          material.bumpMap   = THREE.ImageUtils.loadTexture('img/map2.jpg');     
+          material.bumpScale = 0.05;
+          material.specularMap = THREE.ImageUtils.loadTexture('img/map3.jpg')
+          material.specular  = new THREE.Color('grey')
+                const earth = new THREE.Mesh( geometryE, material );
+                earth.position.set(0,0,0);
+                scene.add( earth ) ;
+          
+    
+          const light = new THREE.AmbientLight( 0xffffff ); // soft white light
+          scene.add( light );
+    
+          var pointLight = new THREE.PointLight(0xFFFFFF);
+          pointLight.position.x = 80;
+          pointLight.position.y = 80;
+          pointLight.position.z = 130;
+          scene.add(pointLight);
+
+
+          couleur = 'white';
+
+          //btn.addEventListener('click', change);
+          btn2.addEventListener('click', coord);
+          btnbleu.addEventListener('click', clrbleu);
+          btnrouge.addEventListener('click', clrrouge);
+          btnvert.addEventListener('click', clrvert);
+ 
+          //function change(){
+          //  console.log(lat,lon)
+          //}
+          function clrvert(){
+            couleur = 'green'
+          }
+
+          function clrbleu(){
+            couleur = 'blue'
+          }
+
+          function clrrouge(){
+            couleur = 'red'
+          }
+
+          function coord(){
+            lati = lat * Math.PI / 180;
+            loni = -lon * Math.PI / 180;
+    
+            coordX = 3 * Math.cos(lati) * Math.cos(loni)
+    
+            coordZ = 3 * Math.cos(lati) * Math.sin(loni)
+    
+            coordY = 3 * Math.sin(lati)
+    
+            const geometry = new THREE.SphereGeometry(0.01, 32, 32);
+            material = new THREE.MeshBasicMaterial( { color: couleur, wireframe: true } );
+            //material.specular  = new THREE.Color("rgb(255,0,0)")
+                  const sphere = new THREE.Mesh( geometry, material );
+            sphere.position.x = coordX;
+            sphere.position.y = coordY;
+            sphere.position.z = coordZ;
+                  scene.add( sphere ) ;
+            console.log(lat)
+            console.log(lon)
+    
+            return;
+          }
+    
+                const animate = function () {
+                    requestAnimationFrame( animate );
+    
+                    renderer.render( scene, camera );
+                };
+    
+                animate();
+    </script>
+
+
+
+</body>
+
+</html>
