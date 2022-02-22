@@ -24,12 +24,14 @@
     <div id="map"></div>
 
     <form>
-        <input type="button" value="ChangeValue" id="btn">
+      <input type="button" value="MaPostion" id="btn">
+      <input type="button" value="AddPoint" id="btn2">
         <input type="button" value="   " id="btnbleu" style="background-color: blue;">
         <input type="button" value="   " id="btnrouge" style="background-color: red;">
         <input type="button" value="   " id="btnvert" style="background-color: green;">
-        <input type="button" value="AddPoint" id="btn2">
     </form>
+  
+    <p id="val">Vous avec cliqué à Latitude: Longitude:</p>
         
 <script>
     //Crée la map sur la position de l'utilisateur
@@ -44,23 +46,26 @@ map.locate({setView: true, watch: true})
         .on('locationfound', function(e){
             var marker = L.marker([e.latitude, e.longitude]).bindPopup('Tu est ici :)');
             map.addLayer(marker);
+            maLat = e.latitude;
+            maLong = e.longitude 
         })
        .on('locationerror', function(e){
             console.log(e);
             alert("Location access denied.");
         });
 
-var markerNice = L.marker([43.71952793124438,7.2833023071289205]).bindPopup('Le centre ville de Nice')
-map.addLayer(markerNice)
+//var markerNice = L.marker([43.71952793124438,7.2833023071289205]).bindPopup('Le centre ville de Nice')
+//map.addLayer(markerNice)
 
 var coord, lat, lon
 map.on('click', function(e){
   coord = e.latlng;
   lat = coord.lat;
   lon = coord.lng;
-  console.log("You clicked the map at latitude: " + lat + " and longitude: " + lon);
+  val.innerHTML="Vous avec cliqué à Latitude: " + lat + " Longitude: " + lon;
+  var point = L.marker([lat, lon]);
+  map.addLayer(point);
   });
-
     
   const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -97,6 +102,7 @@ map.on('click', function(e){
           couleur = 'white';
 
           //btn.addEventListener('click', change);
+          btn.addEventListener('click', MaPos);
           btn2.addEventListener('click', coord);
           btnbleu.addEventListener('click', clrbleu);
           btnrouge.addEventListener('click', clrrouge);
@@ -137,6 +143,30 @@ map.on('click', function(e){
                   scene.add( sphere ) ;
             console.log(lat)
             console.log(lon)
+    
+            return;
+          }
+
+          function MaPos(){
+            Malati = maLat * Math.PI / 180;
+            Maloni = -maLong * Math.PI / 180;
+    
+            coordX = 3 * Math.cos(Malati) * Math.cos(Maloni)
+    
+            coordZ = 3 * Math.cos(Malati) * Math.sin(Maloni)
+    
+            coordY = 3 * Math.sin(Malati)
+    
+            const geometry = new THREE.SphereGeometry(0.01, 32, 32);
+            material = new THREE.MeshBasicMaterial( { color: couleur, wireframe: true } );
+            //material.specular  = new THREE.Color("rgb(255,0,0)")
+                  const sphere = new THREE.Mesh( geometry, material );
+            sphere.position.x = coordX;
+            sphere.position.y = coordY;
+            sphere.position.z = coordZ;
+                  scene.add( sphere ) ;
+            console.log(Malati)
+            console.log(Maloni)
     
             return;
           }
